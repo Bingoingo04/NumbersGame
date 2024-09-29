@@ -4,55 +4,65 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Välj hur stort du vill gissa på");
-            string inputMax = Console.ReadLine();
-            int max = Int32.Parse(inputMax);
 
-            Console.WriteLine("Välj hur många gissningar du får");
-            string inputGuesses = Console.ReadLine();
-            int guesses = Int32.Parse(inputGuesses);
+            string keepGuessing = "j";
 
-            Random rnd = new Random();
-            int rnd1 = rnd.Next(1, max + 1);
-
-            Console.WriteLine("Välkommen! Jag tänker på ett nummer. Kan du gissa vilket?");
-
-            for (int i = 0; i < guesses; i++)
+            while (keepGuessing == "j")
             {
-                string input = Console.ReadLine();
-                int guess = Int32.Parse(input);
+                Console.WriteLine("Välj hur stort du vill gissa på");
+                string inputMax = Console.ReadLine();
+                int max = Convert.ToInt32(inputMax);
 
-                if (CheckGuess(guess, rnd1))
+                Console.WriteLine("Välj hur många gissningar du får");
+                string inputGuesses = Console.ReadLine();
+                int guesses = Convert.ToInt32(inputGuesses);
+
+                Random rnd = new Random();
+                int numberToGuess = rnd.Next(1, max + 1);
+
+                Console.WriteLine("Jag tänker på ett nummer. Kan du gissa vilket?");
+
+                for (int i = 0; i < guesses; i++)
                 {
-                    break;
+                    string input = Console.ReadLine();
+                    int guess = Convert.ToInt32(input);
+
+                    if (CheckGuess(guess, numberToGuess))
+                    {
+                        break;
+                    }
+
+                    if (i == guesses - 1)
+                    {
+                        Console.WriteLine($"Tyvärr du lyckades inte gissa talet på {guesses} försök!");
+                    }
                 }
 
-                if (i == guesses - 1)
-                {
-                    Console.WriteLine($"Tyvärr du lyckades inte gissa talet på {guesses} försök!");
-                }
+                Console.WriteLine("Vill du spela igen? (j/n)");
+                keepGuessing = Console.ReadLine().ToLower();
+
             }
+        }
 
-            static bool CheckGuess(int guess, int rnd1)
+        static bool CheckGuess(int guess, int numberToGuess)
+        {
+            if (guess == numberToGuess)
             {
-                if (guess == rnd1)
-                {
-                    Console.WriteLine("Wohoo! Du gjorde det!");
-                    return true;
-                }
-                else if (guess < rnd1)
-                {
-                    Console.WriteLine("Tyvärr du gissade för lågt!");
-                    return false;
-                }
-                else
-                {
-                    string[] responsesToHigh = new string[] { "Tyvärr du gissade för högt!", "Haha! Det var för högt!", "Bra gissat men det var för högt!", "Försök igen men gissa lägre!" };
-                    Random rnd = new Random();
-                    int rnd2 = rnd.Next(0, 4);
-                    Console.WriteLine(responsesToHigh[rnd2]);
-                    return false;
-                }
+                Console.WriteLine("Wohoo! Du gjorde det!");
+                return true;
+            }
+            else if (guess < numberToGuess)
+            {
+                Console.WriteLine("Tyvärr du gissade för lågt!");
+                return false;
+            }
+            else
+            {
+                string[] responsesToHigh = new string[] { "Tyvärr du gissade för högt!", "Haha! Det var för högt!", "Bra gissat men det var för högt!", "Försök igen men gissa lägre!" };
+                Random rnd = new Random();
+                int rnd2 = rnd.Next(0, 4);
+                Console.WriteLine(responsesToHigh[rnd2]);
+                return false;
             }
         }
     }
