@@ -28,11 +28,11 @@
                     int guess = Convert.ToInt32(input);
 
                     if (CheckGuess(guess, numberToGuess))
-                    {
-                        break;
+                    { 
+                        break; // If guess is correct break the guess loop
                     }
 
-                    if (i == guesses - 1)
+                    if (i == guesses - 1) // Last guess, informs player that they lost
                     {
                         Console.WriteLine($"Tyvärr du lyckades inte gissa talet på {guesses} försök!");
                     }
@@ -58,7 +58,8 @@
             }
             else
             {
-                string[] responsesToHigh = new string[] { "Tyvärr du gissade för högt!", "Haha! Det var för högt!", "Bra gissat men det var för högt!", "Försök igen men gissa lägre!" };
+                // Randomizes response if guess was to high
+                string[] responsesToHigh = [ "Tyvärr du gissade för högt!", "Haha! Det var för högt!", "Bra gissat men det var för högt!", "Försök igen men gissa lägre!" ];
                 Random rnd = new Random();
                 int rnd2 = rnd.Next(0, 4);
                 Console.WriteLine(responsesToHigh[rnd2]);
